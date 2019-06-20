@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <div class="card card-header">Buscar</div>
+  <div class="card card-body">
+    <div class="row">
+      <div class="col-md">
+        <label class="col-form-label" for="OSte">Estado de Origen: </label>
+        <select [(ngModel)]="estDest" class="form-control" id="OSte">
+
+          <option *ngFor="let states of USstates" value="{{states}}">{{states}}</option>
+
+        </select>
+      </div>
+
+
+      <div class="col-md">
+        <label class="col-form-label" for="DSte">Estado de Destino: </label>
+        <select [(ngModel)]="estOrg" class="form-control" id="DSte">
+          <option *ngFor="let states of USstates" value="{{states}}">{{states}}</option>
+        </select>
+
+      </div>
+
+      <div class="col-md text-right">
+        <br/>
+        <button style="margin-top: auto" id="srcBtn" (click)="filter(estOrg,estDest)" type="button"
+                class="btn btn-outline-primary ">
+          Search
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+
+<div class="col-md-12" id="resultados">
+
+
+  <table class="table text-left" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+      <th scope="col">O. City</th>
+      <th scope="col">O. State</th>
+      <th scope="col">D. City</th>
+      <th scope="col">D. State</th>
+      <th scope="col">Carrier</th>
+      <th scope="col">Based</th>
+      <th scope="col">Phone 1</th>
+      <th scope="col">Phone 2</th>
+      <th scope="col">Notes</th>
+    </tr>
+
+    </thead>
+
+    <td *ngIf="noData" class="text-center">
+      <img class="text-center" src="https://d1n2uj5xci2yfb.cloudfront.net/wp-content/uploads/noresults.png"/>
+    </td>
+    <tbody>
+    <td><img *ngIf="carga" src="assets/spinner-pre.gif" alt="Loading..."/></td>
+
+    <tr *ngFor="let carriers of carrier | paginate:{itemsPerPage:10, currentPage:page}">
+
+      <td>{{carriers.O_City}}</td>
+      <td>{{carriers.O_State}}</td>
+      <td>{{carriers.D_City}}</td>
+      <td>{{carriers.D_State}}</td>
+      <td>{{carriers.Carrier}}</td>
+      <td>{{carriers.Based}}</td>
+      <td>{{carriers.Phone1}}</td>
+      <td>{{carriers.Phone2}}</td>
+      <td>{{carriers.Notes}}</td>
+      <td><a class="btn btn-primary btn-info" routerLink="/form/{{carriers.Order_ID}}" type="button">Editar Ruta</a></td>
+
+    </tr>
+    </tbody>
+
+
+  </table>
+<pagination-controls *ngIf="result" (pageChange)="page =$event"></pagination-controls>
+
+</div>
+
+<a routerLink="/form" class=" btn btn-primary"> Crear Nueva Ruta </a>
+
